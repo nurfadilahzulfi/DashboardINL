@@ -5,7 +5,7 @@
 import TopBar from '@/views/dashboard/layout/components/TopBar.vue';
 import { useLayout } from '@/views/dashboard/layout/components/layout';
 // import TopBar from '@/views/dashboard/layout/components/TopBar.vue';
-import { computed, ref, watch, onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
