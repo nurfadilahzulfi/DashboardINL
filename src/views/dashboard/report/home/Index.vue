@@ -3,12 +3,9 @@ import TopBar from '@/views/dashboard/layout/components/TopBar.vue';
 import { marked } from 'marked'; // Pastikan sudah: npm install marked
 import moment from 'moment';
 import { nextTick, onMounted, ref } from 'vue';
-<<<<<<< HEAD
 
 // --- 1. IMPORT KOMPONEN GRAFIK PREDIKSI ---
 import PredictionCpoChart from '@/views/dashboard/report/harga/components/PredictionCpoChart.vue';
-=======
->>>>>>> 9f67c4537b4738b9b50b937a9e87fb8583f78daa
 
 // Controller
 import { chatStreamAI } from '@/controller/getApiFromAI/chatbotController';
@@ -125,7 +122,7 @@ const sendChatMessage = async () => {
 const loadPredictionData = async () => {
     loadingPredictionAI.value = 'loading';
     try {
-        const response = await fetch('http://192.168.110.49:3000/forecast-data'); 
+        const response = await fetch('http://192.168.161.140:3000/forecast-data'); 
         if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
         dataPredictionAI.value = result;
@@ -197,68 +194,7 @@ const updateDates = (dates) => {
     loadAllData();
 };
 
-<<<<<<< HEAD
 onMounted(() => { loadAllData(); });
-=======
-const isChatOpen = ref(false);
-const messages = ref([]);
-const userInput = ref('');
-const chatWindow = ref(null);
-
-const sendMessage = async () => {
-    if (!userInput.value.trim()) return;
-
-    messages.value.push({ role: 'user', content: userInput.value });
-    const prompt = userInput.value;
-    userInput.value = '';
-
-    await nextTick();
-    chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
-
-    const botMsg = { role: 'assistant', content: '' };
-    messages.value.push(botMsg);
-
-    try {
-        const response = await fetch('http://192.168.1.88:8080/api/ai/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt })
-        });
-
-        if (!response.body) {
-            botMsg.content = '⚠️ Tidak ada response body dari server.';
-            return;
-        }
-
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder('utf-8');
-        let partial = '';
-
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            partial += decoder.decode(value, { stream: true });
-            botMsg.content = partial.replace(/<think>.*?<\/think>/gs, ''); // jaga2 filter kalau backend belum filter
-
-            messages.value = [...messages.value];
-            await nextTick();
-            chatWindow.value.scrollTop = chatWindow.value.scrollHeight;
-        }
-    } catch (error) {
-        console.error(error);
-        botMsg.content = '⚠️ Gagal terhubung ke AI Server.';
-    }
-};
-
-import { marked } from 'marked';
-
-const renderMarkdown = (text) => {
-    return marked.parse(text || '').replace(/\n/g, '<br>');
-};
-
-const loadData = async () => {};
->>>>>>> 9f67c4537b4738b9b50b937a9e87fb8583f78daa
 </script>
 
 <template>
@@ -322,7 +258,6 @@ const loadData = async () => {};
                         <sdm-view :datas="dataSDM" />
                      </div>
                 </div>
-<<<<<<< HEAD
 
                 <div class="flex justify-center gap-4 mt-10">
                     <button @click="activePage = 0" class="px-8 py-2 rounded-full border transition-all text-[10px] font-bold"
@@ -360,39 +295,6 @@ const loadData = async () => {};
                 <button @click="toggleChat" class="w-16 h-16 rounded-full bg-blue-600 shadow-xl flex items-center justify-center hover:scale-105 transition-all">
                     <i class="pi" :class="isChatOpen ? 'pi-times' : 'pi-comments'" style="font-size: 1.5rem"></i>
                 </button>
-=======
-                <!-- Floating Button -->
-                <div class="fixed bottom-6 right-6 z-50">
-                    <button class="bg-pink-600 hover:bg-pink-700 text-white rounded-full shadow-lg p-4" @click="isChatOpen = true">💬</button>
-                </div>
-
-                <!-- Chat Dialog -->
-                <div v-if="isChatOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-neutral-900 rounded-xl shadow-lg w-[32rem] h-[85vh] flex flex-col">
-                        <!-- Header -->
-                        <div class="flex justify-between items-center p-3 border-b border-neutral-700">
-                            <h3 class="text-white font-semibold">AI Chat Assistant</h3>
-                            <button class="text-gray-400 hover:text-white" @click="isChatOpen = false">✕</button>
-                        </div>
-
-                        <!-- Messages -->
-                        <div class="flex-1 overflow-y-auto p-4 space-y-3 text-sm scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent" ref="chatWindow">
-                            <div v-for="(msg, idx) in messages" :key="idx" :class="msg.role === 'user' ? 'text-right' : 'text-left'">
-                                <span v-if="msg.role === 'user'" class="bg-pink-600 text-white px-3 py-2 rounded-lg inline-block">
-                                    {{ msg.content }}
-                                </span>
-                                <span v-else class="bg-gray-700 text-white px-3 py-2 rounded-lg inline-block text-left prose prose-invert max-w-full" v-html="renderMarkdown(msg.content)"> </span>
-                            </div>
-                        </div>
-
-                        <!-- Input -->
-                        <div class="p-3 border-t border-neutral-700 flex gap-2 items-center">
-                            <input v-model="userInput" type="text" placeholder="Tulis pesan..." class="flex-1 rounded-lg bg-neutral-800 text-white p-2 text-sm" @keyup.enter="sendMessage" />
-                            <button class="bg-pink-600 hover:bg-pink-700 text-white px-4 rounded-lg" @click="sendMessage">➤</button>
-                        </div>
-                    </div>
-                </div>
->>>>>>> 9f67c4537b4738b9b50b937a9e87fb8583f78daa
             </div>
         </div>
     </div>

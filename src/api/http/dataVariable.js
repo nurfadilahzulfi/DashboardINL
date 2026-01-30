@@ -9,5 +9,5 @@ export const URL_API_Portal = 'http://103.176.66.42:30004/api/';
 export const URL_API_Odoo = 'http://103.176.66.42:30003/api/';
 export const APP_ID = 24;
 // export const URL_AI
-export const URL_AI = 'http://192.168.110.49:3000/chat';
-export const URL_AI_FORECAST = 'http://192.168.110.49:3000/forecast-data';
+export const URL_AI = 'http://192.168.161.140:3000/chat';
+export const URL_AI_FORECAST = 'http://192.168.161.140:3000/forecast-data';
